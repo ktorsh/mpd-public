@@ -278,7 +278,10 @@ class GaussianDiffusionModel(nn.Module, ABC):
     @torch.no_grad()
     def warmup(self, horizon=64, device='cuda'):
         shape = (2, horizon, self.state_dim)
-        x = torch.randn(shape, device=device)
+        x = torch.randn(shape, device=device) 
+        print("SHAPE AND RAND")
+        print(shape)
+        print(x)
         t = make_timesteps(2, 1, device)
         self.model(x, t, context=None)
 

@@ -154,7 +154,6 @@ class TemporalUnet(nn.Module):
         if self.conditioning_type == 'attention':
             x = self.mid_attention(x, context=context)
         x = self.mid_block2(x, c_emb)
-
         for resnet, resnet2, attn_self, attn_conditioning, upsample in self.ups:
             x = torch.cat((x, h.pop()), dim=1)
             x = resnet(x, c_emb)

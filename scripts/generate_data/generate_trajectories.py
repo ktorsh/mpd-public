@@ -18,10 +18,10 @@ from torch_robotics.visualizers.planning_visualizer import PlanningVisualizer
 
 
 def generate_collision_free_trajectories(
-    env_id,
-    robot_id,
-    num_trajectories_per_context,
-    results_dir,
+    env_id='EnvCrazyflie3D',
+    robot_id='RobotPointMass3D',
+    num_trajectories_per_context='20',
+    results_dir='scripts/generate_data/logs',
     threshold_start_goal_pos=1.0,
     obstacle_cutoff_margin=0.03,
     n_tries=1000,
@@ -174,10 +174,10 @@ def experiment(
     # env_id: str = 'EnvDense2D',
     # env_id: str = 'EnvSimple2D',
     # env_id: str = 'EnvNarrowPassageDense2D',
-    env_id: str = 'EnvSpheres3D',
+    env_id: str = 'EnvCrazyflie3D',
 
     # robot_id: str = 'RobotPointMass',
-    robot_id: str = 'RobotPanda',
+    robot_id: str = 'RobotPointMass3D',
 
     n_support_points: int = 64,
     duration: float = 5.0,  # seconds

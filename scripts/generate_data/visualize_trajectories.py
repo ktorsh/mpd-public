@@ -13,7 +13,7 @@ from torch_robotics.tasks.tasks import PlanningTask
 from torch_robotics.torch_utils.torch_utils import DEFAULT_TENSOR_ARGS, to_torch
 from torch_robotics.visualizers.planning_visualizer import PlanningVisualizer
 
-DATA_DIR = '../../data_trajectories/EnvSpheres3D-RobotPanda-cluster/66'
+DATA_DIR = '../../data_trajectories/EnvCrazyflie3D/0'
 
 tensor_args = DEFAULT_TENSOR_ARGS
 
@@ -45,7 +45,7 @@ task = PlanningTask(
 )
 
 # -------------------------------- Load trajectories -------------------------
-trajs_collision = torch.load(os.path.join(DATA_DIR, 'trajs-collision.pt')).to(**tensor_args)
+# trajs_collision = torch.load(os.path.join(DATA_DIR, 'trajs-collision.pt')).to(**tensor_args)
 trajs_free = torch.load(os.path.join(DATA_DIR, 'trajs-free.pt')).to(**tensor_args)
 
 # trajs = torch.cat((trajs_collision, trajs_free))

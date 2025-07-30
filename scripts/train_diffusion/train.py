@@ -16,15 +16,15 @@ os.environ["HDF5_USE_FILE_LOCKING"] = "FALSE"
 def experiment(
     ########################################################################
     # Dataset
-    dataset_subdir: str = 'EnvSimple2D-RobotPointMass',
-    # dataset_subdir: str = 'EnvSpheres3D-RobotPanda',
+    dataset_subdir: str = 'EnvCrazyflie3D',
+    # dataset_subdir: str = 'EnvDense2D-RobotPointMass',
     include_velocity: bool = True,
 
     ########################################################################
     # Diffusion Model
     diffusion_model_class: str = 'GaussianDiffusionModel',
     variance_schedule: str = 'exponential',  # cosine
-    n_diffusion_steps: int = 25,
+    n_diffusion_steps: int = 50,
     predict_epsilon: bool = True,
 
     # Unet

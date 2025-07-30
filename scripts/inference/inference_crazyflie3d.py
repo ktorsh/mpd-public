@@ -1,5 +1,3 @@
-# from torch_robotics.isaac_gym_envs.motion_planning_envs import PandaMotionPlanningIsaacGymEnv, MotionPlanningController
-
 import os
 import pickle
 from math import ceil
@@ -37,8 +35,9 @@ def experiment(
     # Experiment configuration
     # model_id: str = 'EnvDense2D-RobotPointMass',
     # model_id: str = 'EnvNarrowPassageDense2D-RobotPointMass',
-    model_id: str = 'EnvSimple2D-RobotPointMass',
+    # model_id: str = 'EnvSimple2D-RobotPointMass',
     # model_id: str = 'EnvSpheres3D-RobotPanda',
+    model_id: str = 'EnvCrazyflie3D',
 
     # planner_alg: str = 'diffusion_prior',
     # planner_alg: str = 'diffusion_prior_then_guide',
@@ -50,7 +49,7 @@ def experiment(
 
     start_guide_steps_fraction: float = 0.25,
     n_guide_steps: int = 5,
-    n_diffusion_steps_without_noise: int = 5,
+    n_diffusion_steps_without_noise: int = 8,
 
     weight_grad_cost_collision: float = 1e-2,
     weight_grad_cost_smoothness: float = 1e-7,
@@ -106,7 +105,7 @@ def experiment(
     # Load dataset with env, robot, task
     train_subset, train_dataloader, val_subset, val_dataloader = get_dataset(
         dataset_class='TrajectoryDataset',
-        use_extra_objects=True,
+        use_extra_objects=False,
         obstacle_cutoff_margin=0.05,
         **args,
         tensor_args=tensor_args
@@ -156,19 +155,21 @@ def experiment(
     ########################################################################################################################
     # Random initial and final positions
     n_tries = 100
-    start_state_pos, goal_state_pos = None, None
-    for _ in range(n_tries):
-        q_free = task.random_coll_free_q(n_samples=2)
-        start_state_pos = q_free[0]
-        goal_state_pos = q_free[1]
+    start_state_pos, goal_state_pos = torch.tensor([0.9, -1.0, 0.0], device='cuda:0'), torch.tensor([1.7, -0.8, 0.0], device='cuda:0')
+    # for _ in range(n_tries):
+    #     q_free = task.random_coll_free_q(n_samples=2)
+    #     start_state_pos = q_free[0]
+    #     start_state_pos[2] = 0 
+    #     goal_state_pos = q_free[1]
+    #     goal_state_pos[2] = 0 
 
-        if torch.linalg.norm(start_state_pos - goal_state_pos) > dataset.threshold_start_goal_pos:
-            break
+    #     if torch.linalg.norm(start_state_pos - goal_state_pos) > dataset.threshold_start_goal_pos:
+    #         break
 
-    if start_state_pos is None or goal_state_pos is None:
-        raise ValueError(f"No collision free configuration was found\n"
-                         f"start_state_pos: {start_state_pos}\n"
-                         f"goal_state_pos:  {goal_state_pos}\n")
+    # if start_state_pos is None or goal_state_pos is None:
+    #     raise ValueError(f"No collision free configuration was found\n"
+    #                      f"start_state_pos: {start_state_pos}\n"
+    #                      f"goal_state_pos:  {goal_state_pos}\n")
 
     print(f'start_state_pos: {start_state_pos}')
     print(f'goal_state_pos: {goal_state_pos}')
