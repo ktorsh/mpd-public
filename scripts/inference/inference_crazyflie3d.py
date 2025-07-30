@@ -155,21 +155,21 @@ def experiment(
     ########################################################################################################################
     # Random initial and final positions
     n_tries = 100
-    start_state_pos, goal_state_pos = torch.tensor([0.9, -1.0, 0.0], device='cuda:0'), torch.tensor([1.7, -0.8, 0.0], device='cuda:0')
-    # for _ in range(n_tries):
-    #     q_free = task.random_coll_free_q(n_samples=2)
-    #     start_state_pos = q_free[0]
-    #     start_state_pos[2] = 0 
-    #     goal_state_pos = q_free[1]
-    #     goal_state_pos[2] = 0 
+    # start_state_pos, goal_state_pos = torch.tensor([0.9, -1.0, 0.0], device='cuda:0'), torch.tensor([1.7, -0.8, 0.0], device='cuda:0')
+    for _ in range(n_tries):
+        q_free = task.random_coll_free_q(n_samples=2)
+        start_state_pos = q_free[0]
+        start_state_pos[2] = 0 
+        goal_state_pos = q_free[1]
+        goal_state_pos[2] = 0 
 
-    #     if torch.linalg.norm(start_state_pos - goal_state_pos) > dataset.threshold_start_goal_pos:
-    #         break
+        if torch.linalg.norm(start_state_pos - goal_state_pos) > dataset.threshold_start_goal_pos:
+            break
 
-    # if start_state_pos is None or goal_state_pos is None:
-    #     raise ValueError(f"No collision free configuration was found\n"
-    #                      f"start_state_pos: {start_state_pos}\n"
-    #                      f"goal_state_pos:  {goal_state_pos}\n")
+    if start_state_pos is None or goal_state_pos is None:
+        raise ValueError(f"No collision free configuration was found\n"
+                         f"start_state_pos: {start_state_pos}\n"
+                         f"goal_state_pos:  {goal_state_pos}\n")
 
     print(f'start_state_pos: {start_state_pos}')
     print(f'goal_state_pos: {goal_state_pos}')
